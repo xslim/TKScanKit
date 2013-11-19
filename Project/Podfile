@@ -1,0 +1,7 @@
+pod "TKScanKit", :path => "../"
+
+target "Demo" do
+end
+
+target "DemoTests" do
+end
