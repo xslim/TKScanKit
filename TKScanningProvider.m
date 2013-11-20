@@ -63,25 +63,13 @@
 
 #pragma mark - Delegate proxies
 
-- (void)finishedScanningWithText:(NSString *)text
-{
-    NSLog(@"TKScanKit finishedScanningWithText: %@", text);
-    [self dismissIfNeeded];
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(scanningProvider:didFinishScanningWithText:)]) {
-        [self.delegate scanningProvider:self didFinishScanningWithText:text];
-    }
-    
-    // TODO: Blocks
-}
-
-- (void)finishedScanningWithInfo:(NSDictionary *)info
+- (void)finishedScanningWithText:(NSString *)text info:(NSDictionary *)info
 {
     NSLog(@"TKScanKit finishedScanningWithInfo: %@", info);
     [self dismissIfNeeded];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(scanningProvider:didFinishScanningWithInfo:)]) {
-        [self.delegate scanningProvider:self didFinishScanningWithInfo:info];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(scanningProvider:didFinishScanningWithText:info:)]) {
+        [self.delegate scanningProvider:self didFinishScanningWithText:text info:info];
     }
     
     // TODO: Blocks

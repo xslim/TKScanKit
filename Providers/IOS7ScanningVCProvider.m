@@ -29,9 +29,7 @@
     
     // configure the scanning view controller:
     scanningVC.resultBlock = ^(NSString *result) {
-        //NSDictionary *info = @{@"result": result};
-        [weakSelf finishedScanningWithText:result];
-        //[weakSelf finishedScanningWithInfo:info];
+        [weakSelf finishedScanningWithText:result info:nil];
     };
     scanningVC.cancelBlock = ^() {
         [weakSelf cancelledScanning];

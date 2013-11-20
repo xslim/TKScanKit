@@ -45,8 +45,7 @@
         break;
     }
     
-    [self finishedScanningWithText:barcode];
-    [self finishedScanningWithInfo:info];
+    [self finishedScanningWithText:barcode info:info];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

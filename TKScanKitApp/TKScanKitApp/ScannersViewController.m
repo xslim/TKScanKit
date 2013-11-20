@@ -14,8 +14,6 @@
 @property (nonatomic, strong) NSDictionary *items;
 @property (nonatomic, strong) TKScanningProvider *currentProvider;
 
-@property (nonatomic, strong) NSString *scannedText;
-
 @end
 
 @implementation ScannersViewController
@@ -50,7 +48,6 @@
 
 - (void)scanWith:(NSString *)name
 {
-    self.scannedText = nil;
     self.currentProvider = [TKScanKit presentScanner:name fromViewController:self];
 }
 
@@ -66,14 +63,9 @@
 
 #pragma mark - TKScanningProviderDelegate
 
-- (void)scanningProvider:(TKScanningProvider *)provider didFinishScanningWithText:(NSString *)text
+- (void)scanningProvider:(TKScanningProvider *)provider didFinishScanningWithText:(NSString *)text info:(NSDictionary *)info
 {
-    self.scannedText = text;
-}
-
-- (void)scanningProvider:(TKScanningProvider *)provider didFinishScanningWithInfo:(NSDictionary *)info
-{
-    NSString *title = [NSString stringWithFormat:@"Scanned: %@", self.scannedText];
+    NSString *title = [NSString stringWithFormat:@"Scanned: %@", text];
     [self showMessageWithTitle:title text:[info description]];
 }
 

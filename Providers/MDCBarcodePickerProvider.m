@@ -26,9 +26,7 @@
 
 - (void)mdcBarcodePicker:(MDCBarcodePicker *)picker didScanBarcode:(NSString *)barcode
 {
-//    NSDictionary *info = @{@"result": barcode};
-    [self finishedScanningWithText:barcode];
-//    [self finishedScanningWithInfo:info];
+    [self finishedScanningWithText:barcode info:nil];
 }
 
 #endif

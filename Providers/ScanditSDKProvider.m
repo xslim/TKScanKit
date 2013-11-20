@@ -23,7 +23,7 @@
 - (void)presentScannerFromViewController:(UIViewController *)viewController
 {
     if (!self.appKey) {
-        self.appKey = @"5Uh0rsIDEeKQasEwzWTVCJOWVY0h8m5L8/7tFVhhJmk";
+        self.appKey = @"yIEPYlHWEeOXIVmiVOy7cX4H1tURXXfLg8TJoRK4TbA";
     }
     ScanditSDKBarcodePicker *vc = [[ScanditSDKBarcodePicker alloc] initWithAppKey:self.appKey];
     
@@ -52,9 +52,7 @@
         barcodeStr = [@"0" stringByAppendingString:barcodeStr];
     }
     
-    [self finishedScanningWithText:barcodeStr];
-    
-    [self finishedScanningWithInfo:barcode];
+    [self finishedScanningWithText:barcodeStr info:barcode];
 
 }
 
@@ -73,10 +71,7 @@
     
 	[(ScanditSDKBarcodePicker *)self.scannerController stopScanning];
     
-    
-    [self finishedScanningWithText:text];
-//    NSDictionary *info = @{@"result": text};
-//    [self finishedScanningWithInfo:info];
+    [self finishedScanningWithText:text info:nil];
     
 }
 

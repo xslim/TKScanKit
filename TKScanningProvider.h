@@ -9,9 +9,7 @@
 @protocol TKScanningProviderDelegate <NSObject>
 @optional
 
-- (void)scanningProvider:(TKScanningProvider *)provider didFinishScanningWithText:(NSString *)text;
-
-- (void)scanningProvider:(TKScanningProvider *)provider didFinishScanningWithInfo:(NSDictionary *)info;
+- (void)scanningProvider:(TKScanningProvider *)provider didFinishScanningWithText:(NSString *)text info:(NSDictionary *)info;
 
 
 - (void)scanningProviderDidCancel:(TKScanningProvider *)provider;
@@ -35,8 +33,7 @@
 - (void)presentScannerFromViewController:(UIViewController *)viewController;
 
 // Private methods, used in subclassing
-- (void)finishedScanningWithText:(NSString *)text;
-- (void)finishedScanningWithInfo:(NSDictionary *)info;
+- (void)finishedScanningWithText:(NSString *)text info:(NSDictionary *)info;
 - (void)cancelledScanning;
 - (void)failedScanningWithError:(NSError *)error;
 
