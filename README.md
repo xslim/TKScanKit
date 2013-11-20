@@ -1,11 +1,18 @@
 # TKScanKit
-
+<!--
 [![Version](http://cocoapod-badges.herokuapp.com/v/TKScanKit/badge.png)](http://cocoadocs.org/docsets/TKScanKit)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/TKScanKit/badge.png)](http://cocoadocs.org/docsets/TKScanKit)
+-->
+
+TKScanKit is a Cocoapods only library, inspired by ARAnalytics, which provides a clean API for different scanning SDKs. It does this by using subspecs from CocoaPods to let you decide which libraries you'd like to use.
 
 ## Usage
 
-To run the example project; clone the repo, and run `pod install` from the Project directory first.
+To run the example project: 
+
+- clone the repo
+- run `pod install` from the `TKScanKitApp` directory
+- Try it
 
 ## Requirements
 
