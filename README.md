@@ -14,8 +14,14 @@ To run the example project:
 - run `pod install` from the `TKScanKitApp` directory
 - Try it
 
-## Requirements
+## Supported scanning providers
+- [ZBarSDK](http://zbar.sourceforge.net/iphone/sdkdoc/)
+- [CDZQRScanningViewController](https://github.com/cdzombak/CDZQRScanningViewController)
+- [ScanditSDK](http://www.scandit.com/barcode-scanner-sdk/)
+- MDCBarcodePicker, 3-d party iOS 7 scanning thing
 
+Feel free to add more!
+  
 ## Installation
 
 TKScanKit is available through [CocoaPods](http://cocoapods.org), to install
