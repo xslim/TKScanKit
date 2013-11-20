@@ -1,0 +1,48 @@
+PODS:
+  - CDZQRScanningViewController (1.0.4)
+  - MDCBarcodePicker (0.1.0)
+  - ScanditSDK (0.1.0)
+  - TKScanKit (0.1.0):
+    - TKScanKit/CoreIOS
+    - TKScanKit/IOS7ScanningVC
+    - TKScanKit/MDCBarcodePicker
+    - TKScanKit/ScanditSDK
+    - TKScanKit/ZBarSDK
+  - TKScanKit/CoreIOS (0.1.0)
+  - TKScanKit/IOS7ScanningVC (0.1.0):
+    - CDZQRScanningViewController
+    - TKScanKit/CoreIOS
+  - TKScanKit/MDCBarcodePicker (0.1.0):
+    - TKScanKit/CoreIOS
+  - TKScanKit/ScanditSDK (0.1.0):
+    - TKScanKit/CoreIOS
+  - TKScanKit/ZBarSDK (0.1.0):
+    - TKScanKit/CoreIOS
+    - ZBarSDK
+  - ZBarSDK (1.3.1)
+
+DEPENDENCIES:
+  - MDCBarcodePicker (from `../../External/`)
+  - ScanditSDK (from `../../External/`)
+  - TKScanKit (from `../`)
+  - TKScanKit/IOS7ScanningVC (from `../`)
+  - TKScanKit/MDCBarcodePicker (from `../`)
+  - TKScanKit/ScanditSDK (from `../`)
+  - TKScanKit/ZBarSDK (from `../`)
+
+EXTERNAL SOURCES:
+  MDCBarcodePicker:
+    :path: ../../External/
+  ScanditSDK:
+    :path: ../../External/
+  TKScanKit:
+    :path: ../
+
+SPEC CHECKSUMS:
+  CDZQRScanningViewController: fd536cedd0022e6bf4ae573409de10ac9aaf3485
+  MDCBarcodePicker: af37f420d3a77488d8a15eae4823cf6ae313996a
+  ScanditSDK: bcbd22aa7cdbfc142f13f7c6e884bad5f7d5e954
+  TKScanKit: 0469dfd8f939d102fa9b54f0d75aac3ee427c1f5
+  ZBarSDK: 6ae54d2077fea894d6a24bd1d7035192c0a7471e
+
+COCOAPODS: 0.28.0

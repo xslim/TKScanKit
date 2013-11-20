@@ -1,0 +1,19 @@
+pod "TKScanKit", :path => "../"
+
+pod "TKScanKit/ZBarSDK", :path => "../"
+pod "TKScanKit/IOS7ScanningVC", :path => "../"
+
+pod "TKScanKit/ScanditSDK", :path => "../"
+pod "TKScanKit/MDCBarcodePicker", :path => "../"
+
+if File.exist?("../../External/ScanditSDK.podspec")
+  pod "ScanditSDK", :path => "../../External/"
+else
+  puts "No ScanditSDK found"
+end
+
+if File.exist?("../../External/MDCBarcodePicker.podspec")
+  pod "MDCBarcodePicker", :path => "../../External/"
+else
+  puts "No MDCBarcodePicker found"
+end
