@@ -16,7 +16,7 @@
 #import "ScanditSDKProvider.h"
 #endif
 
-#ifdef TKSK_IOS7SCANNINGVC_EXISTS
-#import "IOS7ScanningVCProvider.h"
+#ifdef TKSK_MDCBARCODEPICKERPROVIDER_EXISTS
+#import "MDCBarcodePickerProvider.h"
 #endif
 
