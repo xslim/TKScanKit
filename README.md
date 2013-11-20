@@ -8,6 +8,40 @@ TKScanKit is a Cocoapods only library, inspired by ARAnalytics, which provides a
 
 ## Usage
 
+To get list of loaded providers:
+``` obj-c
+NSArray *items = [TKScanKit availableProviders];
+```
+
+To start scanning:
+``` obj-c
+TKScanningProvider *provider = [TKScanKit newProviderWithName:@"ZBarSDK"];
+provider.delegate = self;
+[provider presentScannerFromViewController:viewController];
+self.scanningProvider = provider;
+```
+
+Or
+``` obj-c
+self.currentProvider = [TKScanKit presentScanner:@"ZBarSDK" fromViewController:self];
+```
+
+And became a delegate of `TKScanningProviderDelegate`:
+``` obj-c
+- (void)scanningProvider:(TKScanningProvider *)provider didFinishScanningWithText:(NSString *)text info:(NSDictionary *)info
+{
+    NSString *title = [NSString stringWithFormat:@"Scanned: %@", text];
+    [self showMessageWithTitle:title text:[info description]];
+}
+
+- (void)scanningProviderDidCancel:(TKScanningProvider *)provider { }
+
+- (void)scanningProvider:(TKScanningProvider *)provider didFailedScanningWithError:(NSError *)error
+{
+    [self showMessageWithTitle:@"Error" text:[error localizedDescription]];
+}
+```
+
 To run the example project: 
 
 - clone the repo
