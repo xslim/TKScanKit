@@ -17,11 +17,26 @@
 @implementation MDCBarcodePickerProvider
 #if TKSK_MDCBARCODEPICKER_EXISTS && defined(COCOAPODS_POD_AVAILABLE_MDCBarcodePicker)
 
+@synthesize scannerController=_scannerController;
+
+- (UIViewController *)scannerController
+{
+    if (!_scannerController) {
+        MDCBarcodePicker *vc = [[MDCBarcodePicker alloc] initWithDelegate:self];
+        
+        if (self.isIntegrated) {
+            self.dismissOnFinish = NO;
+        }
+        
+        _scannerController = vc;
+    }
+    return _scannerController;
+}
+
 - (void)presentScannerFromViewController:(UIViewController *)viewController
 {
-    MDCBarcodePicker *vc = [[MDCBarcodePicker alloc] initWithDelegate:self];
-    self.scannerController = vc;
-    [viewController presentViewController:vc animated:YES completion:nil];
+    self.dismissOnFinish = YES;
+    [viewController presentViewController:self.scannerController animated:YES completion:nil];
 }
 
 - (void)mdcBarcodePicker:(MDCBarcodePicker *)picker didScanBarcode:(NSString *)barcode

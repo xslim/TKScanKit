@@ -6,6 +6,7 @@
 
 #import "ZBarSDKProvider.h"
 #import <ZBarSDK/ZBarReaderViewController.h>
+#import <ZBarSDK/ZBarReaderView.h>
 
 @interface ZBarSDKProvider () <ZBarReaderDelegate>
 
@@ -14,21 +15,56 @@
 @implementation ZBarSDKProvider
 #ifdef TKSK_ZBARSDK_EXISTS
 
+@synthesize scannerController=_scannerController;
+
+- (UIViewController *)scannerController
+{
+    if (!_scannerController) {
+        ZBarReaderViewController *vc = [[ZBarReaderViewController alloc] init];
+        vc.readerDelegate = self;
+        
+        ZBarImageScanner *scanner = vc.scanner;
+        // Disable rarely used I2/5 to improve performance
+        [scanner setSymbology:ZBAR_I25
+                       config:ZBAR_CFG_ENABLE
+                           to:0];
+        
+        if (self.isIntegrated) {
+            self.dismissOnFinish = NO;
+            vc.showsZBarControls = NO;
+            vc.showsCameraControls = NO;
+        }
+
+        _scannerController = vc;
+    }
+    return _scannerController;
+}
+
+- (void)start {};
+- (void)stop {};
+
+- (void)setSize:(CGSize)size
+{
+    
+}
+
+- (void)configureDefaultsForScanner:(ZBarImageScanner *)scanner
+{
+    
+}
+
 - (void)presentScannerFromViewController:(UIViewController *)viewController
 {
-    ZBarReaderViewController *vc = [[ZBarReaderViewController alloc] init];
-    vc.readerDelegate = self;
+    self.dismissOnFinish = YES;
+    [viewController presentViewController:self.scannerController animated:YES completion:nil];
+}
+
+- (UIView *)scanningView
+{
+    ZBarReaderView *v = [[ZBarReaderView alloc] init];
+    v.readerDelegate = self;
     
-    ZBarImageScanner *scanner = vc.scanner;
-    
-    // Disable rarely used I2/5 to improve performance
-    [scanner setSymbology:ZBAR_I25
-                   config:ZBAR_CFG_ENABLE
-                       to:0];
-    
-    
-    self.scannerController = vc;
-    [viewController presentViewController:vc animated:YES completion:nil];
+    return v;
 }
 
 #pragma mark - Delegates
@@ -36,10 +72,9 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     id<NSFastEnumeration> results = [info objectForKey:ZBarReaderControllerResults];
-    ZBarSymbol *symbol = nil;
     NSString *barcode = nil;
     
-    for (symbol in results) {
+    for (ZBarSymbol *symbol in results) {
         // Just grab the first barcode
         barcode = symbol.data;
         break;
@@ -58,6 +93,29 @@
 - (void)readerControllerDidFailToRead:(ZBarReaderController *)reader withRetry:(BOOL)retry
 {
     [self failedScanningWithError:nil];
+}
+
+- (void) readerView: (ZBarReaderView*) readerView
+     didReadSymbols: (ZBarSymbolSet*) symbols
+          fromImage: (UIImage*) image
+{
+    NSString *barcode = nil;
+    
+    for (ZBarSymbol *symbol in symbols) {
+        // Just grab the first barcode
+        barcode = symbol.data;
+        break;
+    }
+    
+    [self finishedScanningWithText:barcode info:nil];
+}
+
+
+//- (void) readerViewDidStart: (ZBarReaderView*) readerView;
+- (void)readerView: (ZBarReaderView*) readerView
+   didStopWithError: (NSError*) error
+{
+    [self failedScanningWithError:error];
 }
 
 #endif

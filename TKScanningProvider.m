@@ -28,12 +28,16 @@
 }
 
 - (void)presentScannerFromViewController:(UIViewController *)viewController { }
+- (void)start {};
+- (void)stop {};
+
+- (void)setSize:(CGSize)size {}
 
 #pragma mark - Private
 
 - (void)presetDefaults
 {
-    self.dismissOnFinish = YES;
+    self.dismissOnFinish = NO;
 }
 
 
@@ -59,6 +63,11 @@
         weakSelf.dismissInProcess = NO;
     }];
     
+}
+
+- (UIView *)scanningView
+{
+    return nil;
 }
 
 #pragma mark - Delegate proxies

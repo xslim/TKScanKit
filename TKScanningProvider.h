@@ -6,6 +6,7 @@
 
 @class TKScanningProvider;
 
+
 @protocol TKScanningProviderDelegate <NSObject>
 @optional
 
@@ -24,13 +25,23 @@
 @property (nonatomic, assign) id <TKScanningProviderDelegate> delegate;
 
 @property (nonatomic, strong) UIViewController *scannerController;
+@property (nonatomic, strong, readonly) UIView *scanningView;
+
 
 @property (nonatomic, assign) BOOL dismissOnFinish;
+@property (nonatomic, assign) BOOL isIntegrated;
+
+
 
 
 + (NSString *)providerName;
 
 - (void)presentScannerFromViewController:(UIViewController *)viewController;
+
+- (void)start;
+- (void)stop;
+
+- (void)setSize:(CGSize)size;
 
 // Private methods, used in subclassing
 - (void)finishedScanningWithText:(NSString *)text info:(NSDictionary *)info;

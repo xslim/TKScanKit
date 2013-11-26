@@ -47,10 +47,52 @@
 + (TKScanningProvider *)presentScanner:(NSString *)providerName fromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController
 {
     TKScanningProvider *provider = [self newProviderWithName:providerName];
+
+    if (!provider) {
+        return nil;
+    }
+    
+    objc_setAssociatedObject(viewController, @"TKScanningProvider", provider, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
     provider.delegate = viewController;
     [provider presentScannerFromViewController:viewController];
     return provider;
 }
+
+// Set Scanner class as a value class TKDefaultScanningProvider
+// [userDefaults]
+
++ (NSString *)defaultProvider
+{
+    NSString *scannerClass = [[NSUserDefaults standardUserDefaults] stringForKey:@"TKDefaultScanningProvider"];
+    if (scannerClass) {
+        return scannerClass;
+    }
+    return nil;
+}
+
++ (TKScanningProvider *)presentDefaultScannerFromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController
+{
+    NSString *scannerClass = [self defaultProvider];
+    return [self presentScanner:scannerClass fromViewController:viewController];
+}
+
+
++ (UIView *)newScanningViewWithProvider:(NSString *)providerName delegate:(id <TKScanningProviderDelegate>)delegate
+{
+    TKScanningProvider *provider = [self newProviderWithName:providerName];
+    
+    if (!provider) {
+        return nil;
+    }
+    
+    objc_setAssociatedObject(delegate, @"TKScanningProvider", provider, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    provider.delegate = delegate;
+    return provider.scanningView;
+}
+
+#pragma mark - Private
 
 + (NSDictionary *)availableProviders
 {
