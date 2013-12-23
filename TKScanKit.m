@@ -65,8 +65,14 @@
 + (NSString *)defaultProvider
 {
     NSString *scannerClass = [[NSUserDefaults standardUserDefaults] stringForKey:@"TKDefaultScanningProvider"];
-    if (scannerClass) {
+    if (scannerClass.length > 0) {
         return scannerClass;
+    } else {
+        NSDictionary *availableProviders = [[self class] availableProviders];
+        if (availableProviders.count > 0) {
+            NSString *loadedProvider = availableProviders.allKeys[0];
+            return loadedProvider;
+        }
     }
     return nil;
 }
