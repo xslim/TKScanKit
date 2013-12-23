@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.homepage     = "http://github.com/xslim/TKScanKit"
   s.license      = {:type => 'MIT', :file => 'LICENSE' }
   s.author       = { "Taras Kalapun" => "t.kalapun@gmail.com" }
-  s.source       = { :git => "http://github.com/xslim/TKScanKit.git", :tag => s.version.to_s }
+  s.source       = { :git => "http://github.com/xslim/TKScanKit.git" } #, :tag => s.version.to_s
 
   s.ios.deployment_target = '6.0'
   # s.osx.deployment_target = '10.7'
