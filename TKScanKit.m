@@ -47,7 +47,8 @@
 + (TKScanningProvider *)presentScanner:(NSString *)providerName fromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController
 {
     TKScanningProvider *provider = [self newProviderWithName:providerName];
-
+    provider.dismissOnFinish = YES;
+    
     if (!provider) {
         return nil;
     }

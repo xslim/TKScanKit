@@ -38,6 +38,7 @@
 - (void)presetDefaults
 {
     self.dismissOnFinish = NO;
+    
 }
 
 

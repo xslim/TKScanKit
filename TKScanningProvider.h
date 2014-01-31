@@ -30,7 +30,9 @@
 
 @property (nonatomic, assign) BOOL dismissOnFinish;
 @property (nonatomic, assign) BOOL isIntegrated;
+@property (nonatomic, assign) BOOL shouldRestart;
 
+@property (nonatomic, assign) BOOL isProcessingResults;
 
 
 

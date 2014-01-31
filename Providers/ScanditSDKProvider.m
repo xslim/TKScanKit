@@ -38,6 +38,7 @@
         
         if (self.isIntegrated) {
             self.dismissOnFinish = NO;
+            self.shouldRestart = NO;
             //[ovc drawViewfinder:NO];
 
             //[ovc setViewfinderHeight:50 width:50 landscapeHeight:50 landscapeWidth:50];
@@ -86,26 +87,44 @@
 }
 
 - (void)scanditSDKOverlayController:(ScanditSDKOverlayController *)overlayController
-                     didScanBarcode:(NSDictionary *)barcode
+                     didScanBarcode:(NSDictionary *)barcodeResult
 {
     [self stop];
     
-    NSString *symbology = [barcode objectForKey:@"symbology"];
-    NSString *barcodeStr= [barcode objectForKey:@"barcode"];
-    if ([symbology isEqualToString:@"UPC12"] && [barcodeStr length] == 12) {
-        // Force UPC12 barcodes to be handled as EAN13 barcodes
-        symbology = @"EAN13";
-        barcodeStr = [@"0" stringByAppendingString:barcodeStr];
+    @synchronized(self) {
+        if (!self.isProcessingResults) {
+            self.isProcessingResults = YES;
+            
+            // Wait just a little while before handling the barcode
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                if (barcodeResult) {
+                    NSString *symbology = [barcodeResult objectForKey:@"symbology"];
+                    NSString *barcode = [barcodeResult objectForKey:@"barcode"];
+                    if ([symbology isEqualToString:@"UPC12"] && [barcode length] == 12) {
+                        // Force UPC12 barcodes to be handled as EAN13 barcodes
+                        symbology = @"EAN13";
+                        barcode = [@"0" stringByAppendingString:barcode];
+                    }
+                    
+                    //NSLog(@"Scanned barcode (%@): %@", symbology, barcode);
+                    self.isProcessingResults = NO;
+                    
+                    if (self.isIntegrated) {
+                        ScanditSDKOverlayController *ovc = [(ScanditSDKBarcodePicker *)self.scannerController overlayController];
+                        [ovc resetUI];
+                        [self finishedScanningWithText:barcode info:barcodeResult];
+                        if (self.shouldRestart) {
+                            [self start];
+                        }
+                        
+                    }
+                }
+            });
+        } else {
+            NSLog(@"WARNING: ScanditSDK delegate called twice");
+        }
     }
-    
-    [self finishedScanningWithText:barcodeStr info:barcode];
-    
-    if (self.isIntegrated) {
-        ScanditSDKOverlayController *ovc = [(ScanditSDKBarcodePicker *)self.scannerController overlayController];
-        [ovc resetUI];
-        [self start];
-    }
-
 }
 
 - (void)scanditSDKOverlayController:(ScanditSDKOverlayController *)overlayController

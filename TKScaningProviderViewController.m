@@ -8,6 +8,10 @@
 
 #import "TKScaningProviderViewController.h"
 
+@interface TKScaningProviderViewController ()
+@property (nonatomic, assign) BOOL viewAppeared;
+@end
+
 @implementation TKScaningProviderViewController
 
 @synthesize delegate=_delegate, provider=_provider;
@@ -37,6 +41,7 @@
     if (!_provider) {
         _provider = [TKScanKit newProviderWithName:[TKScanKit defaultProvider]];
         _provider.isIntegrated = YES;
+        _provider.shouldRestart = YES;
     }
     return _provider;
 }
@@ -76,6 +81,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    if (self.viewAppeared) {
+        return;
+    }
     
     UIViewController *child = [self.childViewControllers lastObject];
     if (child) {
@@ -84,7 +93,9 @@
         [child.view layoutIfNeeded];
     }
     
-    [self.provider start];
+    //if (self.provider.shouldRestart) {
+        [self.provider start];
+    //}
 }
 
 
