@@ -26,7 +26,8 @@
 {
     if (!_scannerController) {
         if (!self.appKey) {
-            self.appKey = @"yIEPYlHWEeOXIVmiVOy7cX4H1tURXXfLg8TJoRK4TbA";
+            self.appKey = @"5Uh0rsIDEeKQasEwzWTVCJOWVY0h8m5L8/7tFVhhJmk";
+            //self.appKey = @"yIEPYlHWEeOXIVmiVOy7cX4H1tURXXfLg8TJoRK4TbA";
         }
         ScanditSDKBarcodePicker *vc = [[ScanditSDKBarcodePicker alloc] initWithAppKey:self.appKey];
         
@@ -96,7 +97,7 @@
             self.isProcessingResults = YES;
             
             // Wait just a little while before handling the barcode
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC);
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 if (barcodeResult) {
                     NSString *symbology = [barcodeResult objectForKey:@"symbology"];
@@ -118,6 +119,8 @@
                             [self start];
                         }
                         
+                    } else {
+                        [self finishedScanningWithText:barcode info:barcodeResult];
                     }
                 }
             });
