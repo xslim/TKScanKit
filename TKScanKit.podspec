@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "TKScanKit"
-  s.version      = "0.1.1"
+  s.version      = "0.1.2"
   s.summary      = 'Use multiple scanning SDKs with one clean API.'
   s.description  = <<-DESC
   TKScanKit is a Cocoapods only library, inspired by ARAnalytics, which provides a clean API for different scanning SDKs. It does this by using subspecs from CocoaPods to let you decide which libraries you'd like to use."
@@ -22,28 +22,28 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Classes/**/*.h'
   # s.frameworks = 'SomeFramework', 'AnotherFramework'
   # s.dependency 'JSONKit', '~> 1.4'
-  
+
   zbarsdk          = { :spec_name => "ZBarSDK",         :dependency => "ZBarSDK" }
   ios7scanningvc   = { :spec_name => "IOS7ScanningVC",  :dependency => "CDZQRScanningViewController" }
   scanditsdk       = { :spec_name => "ScanditSDK",      :dependency => "ScanditSDK" }
 #  mdcbarcodepicker = { :spec_name => "MDCBarcodePicker" }
-  
-  
-  $all_analytics = [zbarsdk, ios7scanningvc, scanditsdk, mdcbarcodepicker]
-  
+
+
+  $all_analytics = [zbarsdk, ios7scanningvc, scanditsdk]
+
   s.subspec "CoreIOS" do |ss|
     ss.source_files =  ['*.{h,m}', 'TKScanningProvider.{h,m}', 'Providers/TKScanKitProviders.h']
     ss.platforms = [:ios]
   end
-  
+
   # make specs for each analytics
     $all_analytics.each do |scan_spec|
       s.subspec scan_spec[:spec_name] do |ss|
-          
+
         providername = scan_spec[:provider]? scan_spec[:provider] : scan_spec[:spec_name]
 
         # Each subspec adds a compiler flag saying that the spec was included
-        ss.prefix_header_contents = "#define TKSK_#{providername.upcase}_EXISTS 1"      
+        ss.prefix_header_contents = "#define TKSK_#{providername.upcase}_EXISTS 1"
         sources = ["Providers/#{providername}Provider.{h,m}"]
 
         # only add the files for the osx / iOS version
@@ -51,12 +51,12 @@ Pod::Spec.new do |s|
           # ss.osx.source_files = sources
           # ss.dependency 'TKScanKit/CoreMac'
           # ss.platforms = [:osx]
-        
-        else   
+
+        else
           ss.ios.source_files = sources
           ss.dependency 'TKScanKit/CoreIOS'
           ss.platforms = [:ios]
-        
+
         end
 
         # If there's a podspec dependency include it
@@ -70,8 +70,8 @@ Pod::Spec.new do |s|
             ss.dependency scan_spec[:dependency]
           end
         end
-      
+
       end
     end
-  
+
 end
