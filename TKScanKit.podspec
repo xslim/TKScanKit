@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.homepage     = "http://github.com/xslim/TKScanKit"
   s.license      = {:type => 'MIT', :file => 'LICENSE' }
   s.author       = { "Taras Kalapun" => "t.kalapun@gmail.com" }
-  s.source       = { :git => "https://github.com/xslim/TKScanKit.git" } #, :tag => s.version.to_s
+  s.source       = { :git => "https://github.com/xslim/TKScanKit.git", :tag => s.version.to_s}
 
   s.ios.deployment_target = '7.0'
   # s.osx.deployment_target = '10.7'
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   zbarsdk          = { :spec_name => "ZBarSDK",         :dependency => "ZBarSDK" }
   ios7scanningvc   = { :spec_name => "IOS7ScanningVC",  :dependency => "CDZQRScanningViewController" }
   scanditsdk       = { :spec_name => "ScanditSDK",      :dependency => "ScanditSDK" }
-  mdcbarcodepicker = { :spec_name => "MDCBarcodePicker" }
+#  mdcbarcodepicker = { :spec_name => "MDCBarcodePicker" }
   
   
   $all_analytics = [zbarsdk, ios7scanningvc, scanditsdk, mdcbarcodepicker]

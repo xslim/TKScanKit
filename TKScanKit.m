@@ -93,7 +93,7 @@
         return nil;
     }
     
-    objc_setAssociatedObject(delegate, @"TKScanningProvider", provider, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(delegate, @"TKScanningProvider", provider, OBJC_ASSOCIATION_ASSIGN);
     
     provider.delegate = delegate;
     return provider.scanningView;

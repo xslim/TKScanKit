@@ -68,7 +68,7 @@
 
 - (void)presentScannerFromViewController:(UIViewController *)viewController
 {
-    ScanditSDKBarcodePicker *vc = self.scannerController;
+    ScanditSDKBarcodePicker *vc = (id)self.scannerController;
     
     ScanditSDKOverlayController *ovc = vc.overlayController;
     [ovc setTorchEnabled:YES];
