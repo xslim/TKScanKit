@@ -75,6 +75,8 @@
     [ovc setCameraSwitchVisibility:CAMERA_SWITCH_ALWAYS];
     [ovc showToolBar:YES];
     [ovc showSearchBar:YES];
+    [ovc setToolBarButtonCaption:NSLocalizedString(@"Cancel", nil)];
+    [ovc setSearchBarPlaceholderText:NSLocalizedString(@"Scan barcode or enter it here", nil)];
     
     self.dismissOnFinish = YES;
     
