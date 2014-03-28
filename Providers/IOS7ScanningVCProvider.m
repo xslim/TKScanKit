@@ -14,36 +14,36 @@
 @implementation IOS7ScanningVCProvider
 #ifdef TKSK_IOS7SCANNINGVC_EXISTS
 
+@synthesize scannerController=_scannerController;
+
 + (NSString *)providerName
 {
     return @"CDZQRScanningViewController";
 }
 
+- (UIViewController *)scannerController {
+    if (!_scannerController) {
+        CDZQRScanningViewController *scanningVC = [CDZQRScanningViewController new];
+        __weak typeof(self) weakSelf = self;
+        // configure the scanning view controller:
+        scanningVC.resultBlock = ^(NSString *result) {
+            [weakSelf finishedScanningWithText:result info:nil];
+        };
+        scanningVC.cancelBlock = ^() {
+            [weakSelf cancelledScanning];
+        };
+        scanningVC.errorBlock = ^(NSError *error) {
+            [weakSelf failedScanningWithError:error];
+        };
+        _scannerController = scanningVC;
+    }
+    return _scannerController;
+}
+
 - (void)presentScannerFromViewController:(UIViewController *)viewController
 {
-    // create the scanning view controller and a navigation controller in which to present it:
-    CDZQRScanningViewController *scanningVC = [CDZQRScanningViewController new];
-    UINavigationController *scanningNavVC = [[UINavigationController alloc] initWithRootViewController:scanningVC];
-
-    __weak __typeof(&*self)weakSelf = self;
-    
-    // configure the scanning view controller:
-    scanningVC.resultBlock = ^(NSString *result) {
-        [weakSelf finishedScanningWithText:result info:nil];
-    };
-    scanningVC.cancelBlock = ^() {
-        [weakSelf cancelledScanning];
-    };
-    scanningVC.errorBlock = ^(NSError *error) {
-        [weakSelf failedScanningWithError:error];
-    };
-    
-    self.scannerController = scanningVC;
-    
-    // present the view controller full-screen on iPhone; in a form sheet on iPad:
-    scanningNavVC.modalPresentationStyle = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? UIModalPresentationFullScreen : UIModalPresentationFormSheet;
-    [viewController presentViewController:scanningNavVC animated:YES completion:nil];
-    
+    self.dismissOnFinish = YES;
+    [viewController presentViewController:self.scannerController animated:YES completion:nil];
 }
 
 #endif
