@@ -74,7 +74,11 @@
     [ovc setTorchEnabled:YES];
     [ovc setCameraSwitchVisibility:CAMERA_SWITCH_ALWAYS];
     [ovc showToolBar:YES];
+    
     [ovc showSearchBar:YES];
+    [ovc setSearchBarKeyboardType:UIKeyboardTypeDefault];
+    [ovc setMinSearchBarBarcodeLength:3];
+    
     [ovc setToolBarButtonCaption:NSLocalizedString(@"Cancel", nil)];
     [ovc setSearchBarPlaceholderText:NSLocalizedString(@"Scan barcode or enter it here", nil)];
     
