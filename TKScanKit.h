@@ -17,9 +17,22 @@
 
 + (TKScanningProvider *)presentScanner:(NSString *)providerName fromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController;
 
+
+/*
+ Default Options:
+@{
+ @"torch": @(YES),
+ @"searchBar": @(YES),
+ @"cameraSwitch": @(YES)
+}
+ */
+
++ (TKScanningProvider *)presentScanner:(NSString *)providerName fromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController options:(NSDictionary *)options;
+
 // Set Scanner class as a value class TKDefaultScanningProvider
 // [userDefaults]
 + (NSString *)defaultProvider;
 + (TKScanningProvider *)presentDefaultScannerFromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController;
++ (TKScanningProvider *)presentDefaultScannerFromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController options:(NSDictionary *)options;
 
 @end

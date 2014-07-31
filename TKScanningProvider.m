@@ -27,7 +27,12 @@
     return [NSStringFromClass(self) stringByReplacingOccurrencesOfString:@"Provider" withString:@""];;
 }
 
-- (void)presentScannerFromViewController:(UIViewController *)viewController { }
+- (void)presentScannerFromViewController:(UIViewController *)viewController options:(NSDictionary *)options {}
+
+- (void)presentScannerFromViewController:(UIViewController *)viewController {
+    [self presentScannerFromViewController:viewController options:nil];
+}
+
 - (void)start {};
 - (void)stop {};
 
@@ -38,6 +43,10 @@
 - (void)presetDefaults
 {
     self.dismissOnFinish = NO;
+    
+}
+
+- (void)forceDismiss {
     
 }
 
@@ -60,9 +69,23 @@
     self.dismissInProcess = YES;
     
     __weak __typeof(&*self)weakSelf = self;
-    [pvc dismissViewControllerAnimated:YES completion:^{
-        weakSelf.dismissInProcess = NO;
-    }];
+    
+    if (![pvc isBeingDismissed]) {
+        [pvc dismissViewControllerAnimated:YES completion:^{
+            weakSelf.dismissInProcess = NO;
+        }];
+    } else {
+        // double try
+        // Wait just a little while before handling the barcode
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [pvc dismissViewControllerAnimated:YES completion:^{
+                weakSelf.dismissInProcess = NO;
+            }];
+        });
+    }
+    
+    
     
 }
 

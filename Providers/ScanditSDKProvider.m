@@ -66,23 +66,30 @@
     [(ScanditSDKBarcodePicker *)self.scannerController setSize:size];
 }
 
-- (void)presentScannerFromViewController:(UIViewController *)viewController
+- (void)presentScannerFromViewController:(UIViewController *)viewController options:(NSDictionary *)o
 {
     ScanditSDKBarcodePicker *vc = (id)self.scannerController;
     
+    BOOL bTorch = o[@"torch"] ? [o[@"torch"] boolValue] : YES;
+    BOOL bSearch = o[@"searchBar"] ? [o[@"searchBar"] boolValue] : YES;
+    CameraSwitchVisibility camVis = (o[@"cameraSwitch"] && ![o[@"cameraSwitch"] boolValue]) ? CAMERA_SWITCH_NEVER : CAMERA_SWITCH_ALWAYS;
+    
     ScanditSDKOverlayController *ovc = vc.overlayController;
-    [ovc setTorchEnabled:YES];
-    [ovc setCameraSwitchVisibility:CAMERA_SWITCH_ALWAYS];
+    [ovc setTorchEnabled:bTorch];
+    [ovc setCameraSwitchVisibility:camVis];
     [ovc showToolBar:YES];
     
-    [ovc showSearchBar:YES];
+    [ovc showSearchBar:bSearch];
     [ovc setSearchBarKeyboardType:UIKeyboardTypeDefault];
     [ovc setMinSearchBarBarcodeLength:3];
     
     [ovc setToolBarButtonCaption:NSLocalizedString(@"Cancel", nil)];
     [ovc setSearchBarPlaceholderText:NSLocalizedString(@"Scan barcode or enter it here", nil)];
     
+    [vc disableStandbyState];
+    
     self.dismissOnFinish = YES;
+    
     
     [viewController presentViewController:self.scannerController animated:YES completion:nil];
     [self start];
@@ -96,6 +103,11 @@
 - (void)scanditSDKOverlayController:(ScanditSDKOverlayController *)overlayController
                      didScanBarcode:(NSDictionary *)barcodeResult
 {
+    UIViewController *pvc = self.scannerController.presentingViewController;
+    if ([pvc isBeingPresented] || [pvc isBeingDismissed]) {
+        return;
+    }
+    
     [self stop];
     
     @synchronized(self) {
@@ -126,6 +138,7 @@
                         }
                         
                     } else {
+                        
                         [self finishedScanningWithText:barcode info:barcodeResult];
                     }
                 }
@@ -154,6 +167,13 @@
     [self finishedScanningWithText:text info:nil];
     
 }
+
+//- (void)finishedScanningWithText:(NSString *)text info:(NSDictionary *)info {
+//    [super finishedScanningWithText:text info:info];
+//    [(ScanditSDKBarcodePicker *)self.scannerController forceRelease];
+//}
+
+//
 
 #endif
 @end

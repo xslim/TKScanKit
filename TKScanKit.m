@@ -44,7 +44,12 @@
     return nil;
 }
 
-+ (TKScanningProvider *)presentScanner:(NSString *)providerName fromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController
+
++ (TKScanningProvider *)presentScanner:(NSString *)providerName fromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController {
+    return [self presentScanner:providerName fromViewController:viewController options:nil];
+}
+
++ (TKScanningProvider *)presentScanner:(NSString *)providerName fromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController options:(NSDictionary *)options
 {
     TKScanningProvider *provider = [self newProviderWithName:providerName];
     provider.dismissOnFinish = YES;
@@ -56,7 +61,7 @@
     objc_setAssociatedObject(viewController, @"TKScanningProvider", provider, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     provider.delegate = viewController;
-    [provider presentScannerFromViewController:viewController];
+    [provider presentScannerFromViewController:viewController options:options];
     return provider;
 }
 
@@ -78,10 +83,14 @@
     return nil;
 }
 
-+ (TKScanningProvider *)presentDefaultScannerFromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController
++ (TKScanningProvider *)presentDefaultScannerFromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController {
+    return [self presentDefaultScannerFromViewController:viewController options:nil];
+}
+
++ (TKScanningProvider *)presentDefaultScannerFromViewController:(UIViewController <TKScanningProviderDelegate>*)viewController options:(NSDictionary *)options
 {
     NSString *scannerClass = [self defaultProvider];
-    return [self presentScanner:scannerClass fromViewController:viewController];
+    return [self presentScanner:scannerClass fromViewController:viewController options:options];
 }
 
 
@@ -146,5 +155,28 @@
     
     return result;
 }
+
+//+ (BOOL)checkPermissions
+//{
+//    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+//    if (authStatus == AVAuthorizationStatusAuthorized) {
+//        // do your logic
+//    } else if(authStatus == AVAuthorizationStatusDenied) {
+//        // denied
+//    } else if(authStatus == AVAuthorizationStatusRestricted) {
+//        // restricted, normally won't happen
+//    } else if(authStatus == AVAuthorizationStatusNotDetermined) {
+//        // not determined?!
+//        [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
+//            if (granted){
+//                NSLog(@"Granted access to %@", mediaType);
+//            } else {
+//                NSLog(@"Not granted access to %@", mediaType);
+//            }
+//        }];
+//    } else {
+//        // impossible, unknown authorization status
+//    }
+//}
 
 @end

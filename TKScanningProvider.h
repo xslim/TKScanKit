@@ -39,6 +39,7 @@
 + (NSString *)providerName;
 
 - (void)presentScannerFromViewController:(UIViewController *)viewController;
+- (void)presentScannerFromViewController:(UIViewController *)viewController options:(NSDictionary *)options;
 
 - (void)start;
 - (void)stop;
