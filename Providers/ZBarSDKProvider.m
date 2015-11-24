@@ -22,13 +22,17 @@
     if (!_scannerController) {
         ZBarReaderViewController *vc = [[ZBarReaderViewController alloc] init];
         vc.readerDelegate = self;
-        
+
         ZBarImageScanner *scanner = vc.scanner;
         // Disable rarely used I2/5 to improve performance
         [scanner setSymbology:ZBAR_I25
                        config:ZBAR_CFG_ENABLE
                            to:0];
-        
+
+        [scanner setSymbology: ZBAR_UPCA
+                            config: ZBAR_CFG_ENABLE
+                            to: 1];
+
         if (self.isIntegrated) {
             self.dismissOnFinish = NO;
             vc.showsZBarControls = NO;
@@ -45,12 +49,12 @@
 
 - (void)setSize:(CGSize)size
 {
-    
+
 }
 
 - (void)configureDefaultsForScanner:(ZBarImageScanner *)scanner
 {
-    
+
 }
 
 - (void)presentScannerFromViewController:(UIViewController *)viewController
@@ -63,7 +67,7 @@
 {
     ZBarReaderView *v = [[ZBarReaderView alloc] init];
     v.readerDelegate = self;
-    
+
     return v;
 }
 
@@ -73,13 +77,13 @@
 {
     id<NSFastEnumeration> results = [info objectForKey:ZBarReaderControllerResults];
     NSString *barcode = nil;
-    
+
     for (ZBarSymbol *symbol in results) {
         // Just grab the first barcode
         barcode = symbol.data;
         break;
     }
-    
+
     [self finishedScanningWithText:barcode info:info];
 }
 
@@ -100,13 +104,13 @@
           fromImage: (UIImage*) image
 {
     NSString *barcode = nil;
-    
+
     for (ZBarSymbol *symbol in symbols) {
         // Just grab the first barcode
         barcode = symbol.data;
         break;
     }
-    
+
     [self finishedScanningWithText:barcode info:nil];
 }
 
