@@ -60,7 +60,7 @@
 - (void)presentScannerFromViewController:(UIViewController *)viewController
 {
     self.dismissOnFinish = YES;
-    [viewController presentViewController:self.scannerController animated:YES completion:nil];
+    [viewController presentViewController:self.scannerController animated:NO completion:nil];
 }
 
 - (UIView *)scanningView
