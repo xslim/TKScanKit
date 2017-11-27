@@ -4,7 +4,7 @@
 [![Platform](http://cocoapod-badges.herokuapp.com/p/TKScanKit/badge.png)](http://cocoadocs.org/docsets/TKScanKit)
 -->
 
-TKScanKit is a Cocoapods only library, inspired by ARAnalytics, which provides a clean API for different scanning SDKs. It does this by using subspecs from CocoaPods to let you decide which libraries you'd like to use.
+TKScanKit is a CocoaPods only library, inspired by ARAnalytics, which provides a clean API for different scanning SDKs. It does this by using subspecs from CocoaPods to let you decide which libraries you'd like to use.
 
 ## Usage
 
