@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
 
   s.subspec "CoreIOS" do |ss|
     ss.source_files =  ['*.{h,m}', 'TKScanningProvider.{h,m}', 'Providers/TKScanKitProviders.h']
-    ss.platforms = [:ios]
+    ss.platform = :ios, "7.0"
   end
 
   # make specs for each analytics
@@ -55,7 +55,7 @@ Pod::Spec.new do |s|
         else
           ss.ios.source_files = sources
           ss.dependency 'TKScanKit/CoreIOS'
-          ss.platforms = [:ios]
+          ss.platform = :ios, "7.0"
 
         end
 
